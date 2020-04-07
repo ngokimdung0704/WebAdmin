@@ -1,0 +1,43 @@
+@model UserCreateViewModel
+
+@{
+    ViewBag.Title = "User Detail";
+}
+<h4>CREATE NEW USER</h4><br>
+<div class="row">
+    <form asp-action="Create" enctype="multipart/form-data" method="POST" class="col-md-6 was-validated">
+    <span class="text-danger">@Html.ValidationMessage("IsExisted")</span>
+        <div class="form-group">
+            <label asp-for="Username"></label>
+            <input asp-for="Username" class="form-control" required>
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+         <div class="form-group">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" required>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" required>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>
+                @Html.DisplayNameFor(x => x.IsActive)
+                @Html.CheckBoxFor(x => x.IsActive)
+            </label>
+        </div>
+        <div class="form-group">
+            <label asp-for="CreatedDate"></label>
+            <input asp-for="CreatedDate" value=@String.Format("{0:dd-MM-yyyy}", Model.CreatedDate) class="form-control" disabled>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastUpdatedDate"></label>
+            <input asp-for="LastUpdatedDate" value=@String.Format("{0:dd-MM-yyyy}", Model.LastUpdatedDate) class="form-control" disabled>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Create User</button>
+        </div>
+    </form>
+</div>

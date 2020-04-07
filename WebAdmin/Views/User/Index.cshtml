@@ -1,0 +1,60 @@
+@model List<UserRawViewModel>
+
+@{
+    ViewBag.Title = "List of Users";
+    int index = 1;
+}
+
+<div class="row">
+    <h4>LIST OF USERS</h4>
+    <table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email Address</th>
+            <th scope="col">IsActive</th>
+            <th scope="col">Created Date</th>
+            <th scope="col">Last Updated Date</th>
+            <th scope="col" colspan="2" style="text-align: center;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@(index++)</th>
+                <td><a asp-action="Detail" asp-route-id="@item.Id" style="text-decoration: underline;">@item.Username</a></td>
+                <td>@item.Email</td>
+                <td>
+                    @if(item.IsActive)
+                    {
+                        <span class='text-success'>True</span>
+                    }else{
+                        <span class='text-danger'>False</span>
+                    }
+                </td>
+                <td>@String.Format("{0:dd-MM-yyyy}", item.CreatedDate)</td>
+                <td>@String.Format("{0:dd-MM-yyyy}", item.LastUpdatedDate)</td>
+                <td><a class="text-warning" asp-action="Delete" asp-route-id="@item.Id" id="btnDelete" data-username="@item.Username">Delete</a></td>
+                <td><a class="text-danger" asp-action="UpdatePassword" asp-route-id="@item.Id" data-username="@item.Username">Update Password</a></td>
+            </tr>   
+        }
+  </tbody>
+</table>
+</div>
+
+@section scripts
+{
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("#btnDelete").click(function() {
+          var name = $(this).attr("data-username");
+        if(confirm("Do you really want to delete " + name + " ?")){
+            return true;
+        }
+        return false;
+      }); 
+    })
+  </script>
+}
